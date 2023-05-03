@@ -1,6 +1,9 @@
 #include <iostream>
+#include <string>
+#include <map>
 #include "rapidjson/document.h"
-#include "zerok/query/query.h"
+#include "zerok/query/Query.h"
+#include "zerok/query/QueryBuilder.h"
 int main()
 {
     std::cout << "\n--------------------\n";

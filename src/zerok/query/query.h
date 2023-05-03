@@ -9,7 +9,7 @@
 #include "rapidjson/pointer.h"
 #include "rapidjson/writer.h"
 
-namespace zk2 {
+namespace zk {
     enum class ConditionType{
         AND,
         OR

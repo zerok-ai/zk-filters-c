@@ -1,6 +1,6 @@
 #include <iostream>
 #include "rapidjson/document.h"
-#include "zerok/query2/query.h"
+#include "zerok/query/query.h"
 int main()
 {
     std::cout << "\n--------------------\n";
@@ -14,7 +14,7 @@ int main()
     //string + int + keyvalue + workload
     const char* json = "{\"condition\":\"AND\",\"zk_request_type\":\"HTTP\",\"rules\":[{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"HTTP\"},{\"id\":\"int_field\",\"field\":\"int_field\",\"type\":\"integer\",\"input\":\"string\",\"operator\":\"equal\",\"value\":35},{\"id\":\"key_value_field\",\"field\":\"key_value_field\",\"key\":\"/value/value2/value3\",\"type\":\"key-map\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"HTTP\"},{\"id\":\"source\",\"field\":\"source\",\"type\":\"workload-identifier\",\"operator\":\"in\",\"value\":{\"service_name\":\"demo/sofa, demo2/invent\",\"ip\":\"10.43.3.4\",\"pod_name\":\"abc,zxy\"}}]}";
     
-    zk2::Query* query = zk2::QueryBuilder::parseQuery(json);
+    zk::Query* query = zk::QueryBuilder::parseQuery(json);
     std::map<std::string, std::string> propsMap = {
         {"zk_req_type", "HTTP"},
         {"int_field", "35"},

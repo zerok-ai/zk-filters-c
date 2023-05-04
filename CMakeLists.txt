@@ -5,8 +5,8 @@ set(CMAKE_CXX_FLAGS "-g")
 # target_compile_features(${TARGET_NAME} PUBLIC cxx_std_17)
 
 ##https://www.jibbow.com/posts/rapidjson-cmake/
-include("${CMAKE_CURRENT_SOURCE_DIR}/vendor/rapidjson.cmake")
-include_directories(${RAPIDJSON_INCLUDE_DIR})
+# include("${CMAKE_CURRENT_SOURCE_DIR}/vendor/rapidjson.cmake")
+# include_directories(${RAPIDJSON_INCLUDE_DIR})
 
 set(SOURCES
     src/main.cc
@@ -23,10 +23,3 @@ set_target_properties(zerok PROPERTIES
 target_include_directories(zerok PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
-
-##Chatgpt
-# Add RapidJSON library as an external library
-# include("${CMAKE_CURRENT_SOURCE_DIR}/vendor/rapidjson.cmake")
-# add_library(rapidjson INTERFACE)
-# target_include_directories(rapidjson INTERFACE ${RAPIDJSON_INCLUDE_DIR})
-# target_link_libraries(zerok PRIVATE rapidjson)

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "SimpleRuleDefault.h"
-#include "rapidjson/document.h"
-#include "rapidjson/pointer.h"
+#include "../rapidjson/include/rapidjson/pointer.h"
+#include "../rapidjson/include/rapidjson/document.h"
 
 namespace zk {
     class SimpleRuleKeyValue : public SimpleRuleDefault {

@@ -38,6 +38,21 @@ namespace zk {
                 return false;
             }
 
+            static std::vector<std::string> splitString(const std::string& str, const std::string& delimiter) {
+                std::vector<std::string> tokens;
+                std::size_t pos = 0;
+                std::size_t endPos;
+
+                while ((endPos = str.find(delimiter, pos)) != std::string::npos) {
+                    tokens.push_back(str.substr(pos, endPos - pos));
+                    pos = endPos + delimiter.length();
+                }
+
+                tokens.push_back(str.substr(pos));
+
+                return tokens;
+            }
+
             rapidjson::Value toJsonValue(std::any value) const{
                 // std::cout << "valuevaluevaluevaluevalue  " << value.type();
                 rapidjson::Document document;

@@ -5,9 +5,28 @@
 #include "query/Query.h"
 #include "query/QueryBuilder.h"
 #include "fetch/AsyncTask.h"
+#include "db/memory.h"
+#include <chrono>
 
-void doSomething(){
-    std::cout << "This will get printed" << std::flush;
+void readerTask(){
+    std::cout << "\nreader task" << std::flush;
+    std::string identifier = "abc01";
+    zk::ZkMemory* zkMemory = zk::ZkMemory::instance(identifier);
+    std::string output = zkMemory->get(100);
+    std::cout << "\nfound data " << output << std::flush;
+
+}
+
+void writerTask(){
+    // printf("hello 01");
+    std::cout << "\nwriter task" << std::flush;
+    std::string identifier = "abc01";
+    zk::ZkMemory* zkMemory = zk::ZkMemory::instance(identifier);
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    auto nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(currentTime.time_since_epoch()).count();
+    std::string timestampStr = std::to_string(nanoseconds);
+    zkMemory->push(timestampStr);
+    std::cout << "\nwrote " << timestampStr << std::flush;
 }
 
 int main()
@@ -36,8 +55,22 @@ int main()
     };
     std::cout << "query->rule->evaluate(propsMap) " << query->rule->evaluate(propsMap) << std::flush;
 
-    // zk::AsyncTask asyncTask(30*60*1000);
-    // asyncTask.start(doSomething);
+    // zk::AsyncTask readerAsyncTask(1000);
+    // readerAsyncTask.start(readerTask);
+
+    // zk::AsyncTask writerAsyncTask(200);
+    // writerAsyncTask.start(writerTask);
+
+    zk::AsyncTask readerAsyncTask(&readerTask, 1000);
+    readerAsyncTask.Start();
+
+    zk::AsyncTask writerAsyncTask(&writerTask, 200);
+    writerAsyncTask.Start();
+
+    while(true){
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+    }
+    // std::this_thread::yield();
 
     // const char* query1Str = "{\"condition\":\"AND\",\"zk_request_type\":{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"HTTP\"},\"rules\":[{\"id\":\"req_method\",\"field\":\"req_method\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"POST\"},{\"id\":\"req_path\",\"field\":\"req_path\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"ends_with\",\"value\":\"\/exception\"},{\"id\":\"destination\",\"field\":\"destination\",\"type\":\"workload-identifier\",\"input\":\"workload-identifier\",\"operator\":\"in\",\"value\":{\"pod_name\":\"abc\"}},{\"id\":\"source\",\"field\":\"source\",\"type\":\"workload-identifier\",\"input\":\"workload-identifier\",\"operator\":\"in\",\"value\":{\"ip\":\"10.43.3.4\",\"pod_name\":\"abc,zxy\",\"service_name\":\"demo\/sofa, demo2\/invent\"}}]}";
     // zk::Query* query1 = zk::QueryBuilder::parseQuery(query1Str);

@@ -42,34 +42,46 @@ int main()
     //string + int + keyvalue + workload
     // const char* json = "{\"condition\":\"AND\",\"zk_request_type\":{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"HTTP\"},\"rules\":[{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"HTTP\"},{\"id\":\"int_field\",\"field\":\"int_field\",\"type\":\"integer\",\"input\":\"string\",\"operator\":\"equal\",\"value\":35},{\"id\":\"key_value_field\",\"field\":\"key_value_field\",\"key\":\"/value/value2/value3\",\"type\":\"key-map\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"HTTP\"},{\"id\":\"source\",\"field\":\"source\",\"type\":\"workload-identifier\",\"operator\":\"in\",\"value\":{\"service_name\":\"demo/sofa, demo2/invent\",\"ip\":\"10.43.3.4\",\"pod_name\":\"abc,zxy\"}}]}";
     //string + int + keyvalue + workload + in
-    const char* json = "{\"condition\":\"AND\",\"zk_request_type\":{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"HTTP, JHKJ, UIOSI\"},\"rules\":[{\"id\":\"string_in_field\",\"field\":\"string_in_field\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"in\",\"value\":\"HTTP\"},{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"HTTP\"},{\"id\":\"int_field\",\"field\":\"int_field\",\"type\":\"integer\",\"input\":\"string\",\"operator\":\"equal\",\"value\":35},{\"id\":\"key_value_field\",\"field\":\"key_value_field\",\"key\":\"/value/value2/value3\",\"type\":\"key-map\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"HTTP\"},{\"id\":\"source\",\"field\":\"source\",\"type\":\"workload-identifier\",\"operator\":\"in\",\"value\":{\"service_name\":\"demo/sofa, demo2/invent\",\"ip\":\"10.43.3.4\",\"pod_name\":\"abc,zxy\"}}]}";
+    // const char* json = "{\"condition\":\"AND\",\"zk_request_type\":{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"HTTP, JHKJ, UIOSI\"},\"rules\":[{\"id\":\"string_in_field\",\"field\":\"string_in_field\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"in\",\"value\":\"HTTP\"},{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"HTTP\"},{\"id\":\"int_field\",\"field\":\"int_field\",\"type\":\"integer\",\"input\":\"string\",\"operator\":\"equal\",\"value\":35},{\"id\":\"key_value_field\",\"field\":\"key_value_field\",\"key\":\"/value/value2/value3\",\"type\":\"key-map\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"HTTP\"},{\"id\":\"source\",\"field\":\"source\",\"type\":\"workload-identifier\",\"operator\":\"in\",\"value\":{\"service_name\":\"demo/sofa, demo2/invent\",\"ip\":\"10.43.3.4\",\"pod_name\":\"abc,zxy\"}}]}";
     
-    zk::Query* query = zk::QueryBuilder::parseQuery(json);
-    std::map<std::string, std::string> propsMap = {
-        {"zk_req_type", "HTTP"},
-        {"int_field", "35"},
-        {"trace_role", "server"},
-        {"remote_addr", "10.0.0.4"},
-        {"string_in_field", "HTTP"},
-        {"key_value_field", "{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value2\":{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value3\":\"HTTP\"}}}"},
-    };
-    std::cout << "query->rule->evaluate(propsMap) " << query->rule->evaluate(propsMap) << std::flush;
+    // zk::Query* query = zk::QueryBuilder::parseQuery(json);
+    // std::map<std::string, std::string> propsMap = {
+    //     {"zk_req_type", "HTTP"},
+    //     {"int_field", "35"},
+    //     {"trace_role", "server"},
+    //     {"remote_addr", "10.0.0.4"},
+    //     {"string_in_field", "HTTP"},
+    //     {"key_value_field", "{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value2\":{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value3\":\"HTTP\"}}}"},
+    // };
+    // std::cout << "query->rule->evaluate(propsMap) " << query->rule->evaluate(propsMap) << std::flush;
 
-    // zk::AsyncTask readerAsyncTask(1000);
-    // readerAsyncTask.start(readerTask);
+    // zk::AsyncTask readerAsyncTask(&readerTask, 1000);
+    // readerAsyncTask.Start();
 
-    // zk::AsyncTask writerAsyncTask(200);
-    // writerAsyncTask.start(writerTask);
+    // zk::AsyncTask writerAsyncTask(&writerTask, 200);
+    // writerAsyncTask.Start();
 
-    zk::AsyncTask readerAsyncTask(&readerTask, 1000);
-    readerAsyncTask.Start();
+    // while(true){
+    //     std::this_thread::sleep_for(std::chrono::seconds(5));
+    // }
 
-    zk::AsyncTask writerAsyncTask(&writerTask, 200);
-    writerAsyncTask.Start();
+    const char* json = "{\"rules\":[{\"version\":1684149787,\"workloads\":{\"mQHLY2dY\":{\"condition\":\"AND\",\"service\":\"demo/sofa\",\"trace_role\":\"server\",\"protocol\":\"HTTP\",\"rules\":[{\"id\":\"req_method\",\"field\":\"req_method\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"POST\"},{\"id\":\"req_path\",\"field\":\"req_path\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"ends_with\",\"value\":\"/exception\"}]}},\"filter_id\":\"0ceD7cx\",\"filters\":{\"type\":\"workload\",\"condition\":\"AND\",\"workloads\":[\"mQHLY2dY\"]}},{\"version\":1684149743,\"workloads\":{\"mQHfY2dY\":{\"condition\":\"AND\",\"service\":\"*/*\",\"trace_role\":\"server\",\"protocol\":\"HTTP\",\"rules\":[{\"condition\":\"AND\",\"rules\":[{\"id\":\"resp_status\",\"field\":\"resp_status\",\"type\":\"integer\",\"input\":\"integer\",\"operator\":\"not equal\",\"value\":200}]}]}},\"filter_id\":\"ic234Dcs\",\"filters\":{\"type\":\"workload\",\"condition\":\"OR\",\"workloads\":[\"mQHfY2dY\"]}}]}";
+    
+    zk::QueryBuilder::parseQueries(json);
+    // zk::Query* query = zk::QueryBuilder::parseQueries(json);
+    // std::map<std::string, std::string> propsMap = {
+    //     {"zk_req_type", "HTTP"},
+    //     {"int_field", "35"},
+    //     {"trace_role", "server"},
+    //     {"remote_addr", "10.0.0.4"},
+    //     {"string_in_field", "HTTP"},
+    //     {"key_value_field", "{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value2\":{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value3\":\"HTTP\"}}}"},
+    // };
+    // std::cout << "query->rule->evaluate(propsMap) " << query->rule->evaluate(propsMap) << std::flush;
 
-    while(true){
-        std::this_thread::sleep_for(std::chrono::seconds(5));
-    }
+
+
+
     // std::this_thread::yield();
 
     // const char* query1Str = "{\"condition\":\"AND\",\"zk_request_type\":{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"HTTP\"},\"rules\":[{\"id\":\"req_method\",\"field\":\"req_method\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":\"POST\"},{\"id\":\"req_path\",\"field\":\"req_path\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"ends_with\",\"value\":\"\/exception\"},{\"id\":\"destination\",\"field\":\"destination\",\"type\":\"workload-identifier\",\"input\":\"workload-identifier\",\"operator\":\"in\",\"value\":{\"pod_name\":\"abc\"}},{\"id\":\"source\",\"field\":\"source\",\"type\":\"workload-identifier\",\"input\":\"workload-identifier\",\"operator\":\"in\",\"value\":{\"ip\":\"10.43.3.4\",\"pod_name\":\"abc,zxy\",\"service_name\":\"demo\/sofa, demo2\/invent\"}}]}";

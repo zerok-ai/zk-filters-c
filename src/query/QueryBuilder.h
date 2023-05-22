@@ -7,6 +7,7 @@
 #include "SimpleRuleInteger.h"
 #include "SimpleRuleString.h"
 #include "SimpleRuleKeyValue.h"
+#include <random>
 
 namespace zk {
     class QueryBuilder{
@@ -25,6 +26,7 @@ namespace zk {
 
                 return randomString;
             }
+
             static std::vector<Query*> parseQueries(const char* jsonRule){
                 rapidjson::Document doc;
                 doc.Parse(jsonRule);

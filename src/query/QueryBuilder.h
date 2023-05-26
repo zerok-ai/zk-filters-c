@@ -62,6 +62,21 @@ namespace zk {
                 return query;
             }
 
+            static std::vector<std::string> splitString(const std::string& str, const std::string& delimiter) {
+                std::vector<std::string> tokens;
+                std::size_t pos = 0;
+                std::size_t endPos;
+
+                while ((endPos = str.find(delimiter, pos)) != std::string::npos) {
+                    tokens.push_back(str.substr(pos, endPos - pos));
+                    pos = endPos + delimiter.length();
+                }
+
+                tokens.push_back(str.substr(pos));
+
+                return tokens;
+            }
+
             static Query* parseQuery(const char* jsonRule){
                 rapidjson::Document doc;
                 doc.Parse(jsonRule);
@@ -70,7 +85,7 @@ namespace zk {
                 std::string protocolString = doc["protocol"].GetString();
                 std::string traceRoleString = doc["trace_role"].GetString();
                 std::string serviceString = doc["service"].GetString();
-                std::vector<std::string> splits = CommonUtils::splitString(serviceString, "/");
+                std::vector<std::string> splits = splitString(serviceString, "/");
                 std::string ns = splits.at(0);
                 std::string service = splits.at(1);
                 parsedQuery->traceRole = traceRoleString;
@@ -87,7 +102,7 @@ namespace zk {
                 std::string protocolString = doc["protocol"].GetString();
                 std::string traceRoleString = doc["trace_role"].GetString();
                 std::string serviceString = doc["service"].GetString();
-                std::vector<std::string> splits = CommonUtils::splitString(serviceString, "/");
+                std::vector<std::string> splits = splitString(serviceString, "/");
                 std::string ns = splits.at(0);
                 std::string service = splits.at(1);
                 parsedQuery->traceRole = traceRoleString;

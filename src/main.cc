@@ -79,6 +79,7 @@ int main()
         {"trace_role", "server"},
         {"remote_addr", "10.0.0.4"},
         {"string_in_field", "HTTP"},
+        {"resp_headers", "{\"traceparent\": \"00-9283972392373379-389283923-98\"}"},
         {"key_value_field", "{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value\":{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value2\":{\"id\":\"zk_req_type\",\"field\":\"zk_req_type\",\"type\":\"string\",\"input\":\"string\",\"operator\":\"equal\",\"value3\":\"HTTP\"}}}"},
     };
     zk::ZkQueryExecutor::apply("HTTP", propsMap);
